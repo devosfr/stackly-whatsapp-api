@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es6",
+        "outDir": "./dist",
+        "rootDir": "./api",
+        "strict": true,
+        "esModuleInterop": true,
+        "sourceMap": false,
+        "skipLibCheck": true
+    },
+    "include": ["api/**/*", "api/llms.txt"],
+    "exclude": ["node_modules", "**/*.spec.ts"]
+}
