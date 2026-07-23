@@ -82,7 +82,7 @@ api.use((req: any, res: any) => {
 // Handler específico para Vercel
 const handler = (req: any, res: any) => {
   console.log('Handler called:', { method: req.method, url: req.url });
-
+// mark
   // Garantir que o middleware de CORS seja aplicado
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Headers', '*');
