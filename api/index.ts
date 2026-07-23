@@ -48,12 +48,7 @@ api.get("/", (req: any, res: any) => {
     message: "API funcionando! 🚀",
     version: "1.1.0",
     endpoints: [
-      "GET /users",
-      "GET /users?apartment_id=:id",
-      "GET /test",
-      "POST /send-email",
-      "POST /ollama/generate",
-      "POST /sendWhatsappMessage"
+      "GET /test"
     ],
     timestamp: new Date().toISOString()
   });
@@ -70,7 +65,7 @@ api.use(routesController);
 
 
 // Middleware de fallback para rotas não encontradas
-api.use('*', (req: any, res: any) => {
+api.use((req: any, res: any) => {
   console.log('Route not found:', { url: req.originalUrl, method: req.method });
   res.status(404).json({
     error: 'Route not found',
@@ -78,33 +73,8 @@ api.use('*', (req: any, res: any) => {
     path: req.originalUrl,
     availableRoutes: [
       'GET /',
-      'GET /users',
-      'GET /users?apartment_id=:id',
       'GET /test',
-      'GET /ollama/status',
-      'POST /send-email',
-      'POST /ollama/generate',
-      'POST /sendWhatsappMessage',
       'POST /logout-whatsapp',
-      'POST /users/create',
-      'PUT /users/resident/:id',
-      'DELETE /users/:id',
-      'DELETE /users/:id/photo',
-      'POST /image/upload',
-      'GET /condominiums',
-      'GET /condominiums?companyId=:id',
-      'POST /condominiums/create',
-      'DELETE /companies/:id',
-      'GET /apartments',
-      'POST /apartments/create',
-      'DELETE /apartments/:id',
-      'GET /buildings',
-      'POST /buildings/create',
-      'DELETE /buildings/:id',
-      'DELETE /condominiums/:id',
-      'GET /volumes',
-      'POST /volumes/create',
-      'PUT /volumes/:id/notified'
     ]
   });
 });
@@ -137,11 +107,11 @@ const handler = (req: any, res: any) => {
   }
 };
 
-// const PORT = 4000;
+const PORT = 4000;
 
-// api.listen(PORT, () => {
-//   console.log(`🚀 Rodando local em http://localhost:${PORT}`);
-// });
+api.listen(PORT, () => {
+  console.log(`🚀 Rodando local em http://localhost:${PORT}`);
+});
 
 
 export default handler;
