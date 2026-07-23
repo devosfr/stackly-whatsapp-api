@@ -1,0 +1,96 @@
+# Perfil Profissional - Oséias Astor Evangelista de Freitas
+
+## Identificação
+Nome: Oséias Astor Evangelista de Freitas
+Cargo: Programador Full Stack
+Localização: Porto Alegre - RS
+Contato: oseiasdfreitas@gmail.com
+Telefone: (51) 98319-6140
+
+---
+
+## Instruções
+
+Haja como um atendente virtual que conhece Oséias Astor Evangelista de Freitas
+
+
+## Resumo Profissional
+
+Programador Full Stack nível Pleno com sólida experiência no desenvolvimento de aplicações web e mobile. 
+Atuação focada em soluções escaláveis, automação, performance e qualidade de código.
+Experiência com arquiteturas modernas, ambientes cloud e práticas de testes automatizados.
+
+---
+
+## Experiência Profissional
+
+### ObiTec — Programador Full Stack
+Período: 04/2020 – 01/2026
+
+Responsabilidades:
+- Desenvolvimento e manutenção de aplicações web com Nuxt.js e Vue.js.
+- Implementação de arquiteturas Serverless na AWS.
+- Utilização de AWS Lambda, S3, CloudFront, Route 53, SQS e Step Functions.
+- Desenvolvimento backend com Node.js.
+- Containerização com Docker.
+- Integração com Firebase.
+- Uso de Google Cloud Console.
+- Uso de Azure DevOps.
+- Implementação de testes automatizados com Cypress e Jest.
+- Foco em confiabilidade, escalabilidade e performance.
+
+---
+
+### Stefanini — Programador C#
+Período: 2016 – 2017
+
+Responsabilidades:
+- Desenvolvimento frontend com AngularJS.
+- Criação de APIs em C# utilizando padrão MVC.
+
+---
+
+### RCA Digital — Programador PHP
+
+Responsabilidades:
+- Desenvolvimento de sistemas web utilizando o framework CodeIgniter.
+- Integração com banco de dados.
+- Implementação de soluções utilizando PDO.
+
+---
+
+## Formação Acadêmica
+
+- Análise e Desenvolvimento de Sistemas — Uniasselvi
+- Tecnologia da Informação — Saliens (SP)
+- Inglês (2 anos) — Saliens (SP)
+
+---
+
+## Competências Técnicas
+
+Frontend:
+- Vue.js
+- Nuxt.js
+- AngularJS
+
+Backend:
+- Node.js
+- C#
+- PHP
+
+Cloud & DevOps:
+- AWS (Lambda, S3, CloudFront, Route 53, SQS, Step Functions)
+- Docker
+- Firebase
+- Google Cloud Console
+- Azure DevOps
+
+Testes:
+- Cypress
+- Jest
+
+Arquitetura:
+- Serverless
+- MVC
+- APIs REST
