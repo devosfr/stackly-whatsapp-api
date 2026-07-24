@@ -15,9 +15,9 @@ bootstrap();
 
 api.use(cors({
   origin: [
-    // "http://localhost:3000",
-    // "http://localhost:8080",
-    // "http://localhost:8081",
+    "http://localhost:3000",
+    "http://localhost:8080",
+    "http://localhost:8081",
     "https://my-front-application-next.vercel.app"
   ],
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
@@ -65,7 +65,7 @@ api.use(routesController);
 
 
 // Middleware de fallback para rotas não encontradas
-api.use((req: any, res: any) => {
+api.use(/.*/,(req: any, res: any) => {
   console.log('Route not found:', { url: req.originalUrl, method: req.method });
   res.status(404).json({
     error: 'Route not found',
