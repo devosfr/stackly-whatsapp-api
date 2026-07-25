@@ -6,7 +6,8 @@
         "rootDir": "./api",
         "strict": true,
         "esModuleInterop": true,
-        "sourceMap": false,
+        "sourceMap": true,
+        "inlineSources": true,
         "skipLibCheck": true
     },
     "include": ["api/**/*", "api/llms.txt"],

@@ -31,11 +31,9 @@ api.use((req, res, next) => {
 
 api.use(routesController);
 
-const PORT = 4000;
+const PORT = 4001;
 
 api.listen(PORT, () => {
   console.log(`🚀 Rodando local em http://localhost:${PORT}`);
 });
 
-
-// export default handler;
