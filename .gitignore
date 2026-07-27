@@ -26,3 +26,7 @@ dist-ssr
 *.slngit push origin main
 *.sw?
 .vercel
+auth
+auth/*
+/auth
+/auth/*
