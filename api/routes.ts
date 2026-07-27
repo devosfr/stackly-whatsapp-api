@@ -17,7 +17,17 @@ router.post("/whatsapp/send-message", async (req, res) => {
 
     const sock = getWhatsapp();
 
-    const jid = `${phone}@s.whatsapp.net`;
+    const exists = await sock.onWhatsApp(`${phone}@s.whatsapp.net`);
+    
+    console.log(JSON.stringify(exists, null, 2));
+
+    if (!exists?.length) {
+      return res.status(404).json({
+        success: false,
+        message: "Contato nao encontrado"
+      })
+    }
+    const jid = exists[0].jid;
 
     await sock.sendMessage(jid, {
       text,
@@ -54,7 +64,7 @@ router.get("/whatsapp/qr", async (req, res) => {
       }
     }
     // mark
-   await bootstrap();
+    await bootstrap();
   } else {
     return res.json({
       connected: true
