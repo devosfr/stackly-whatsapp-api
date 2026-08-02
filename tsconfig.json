@@ -1,15 +1,33 @@
+// {
+//     "compilerOptions": {
+//         "module": "commonjs",
+//         "target": "es6",
+//         "outDir": "./dist",
+//         "rootDir": "./api",
+//         "strict": true,
+//         "esModuleInterop": true,
+//         "sourceMap": true,
+//         "inlineSources": true,
+//         "skipLibCheck": true
+//     },
+//     "include": ["api/**/*", "api/llms.txt"],
+//     "exclude": ["node_modules", "**/*.spec.ts"]
+// }
+
 {
-    "compilerOptions": {
-        "module": "commonjs",
-        "target": "es6",
-        "outDir": "./dist",
-        "rootDir": "./api",
-        "strict": true,
-        "esModuleInterop": true,
-        "sourceMap": true,
-        "inlineSources": true,
-        "skipLibCheck": true
-    },
-    "include": ["api/**/*", "api/llms.txt"],
-    "exclude": ["node_modules", "**/*.spec.ts"]
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "lib": ["ES2022"],
+    "rootDir": "./api",
+    "outDir": "./dist",
+
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+
+    "sourceMap": true,
+    "inlineSources": true
+  }
 }
