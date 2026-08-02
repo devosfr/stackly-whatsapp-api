@@ -30,3 +30,6 @@ auth
 auth/*
 /auth
 /auth/*
+
+# Environment variables
+.env
