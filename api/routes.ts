@@ -1,16 +1,100 @@
 import express from 'express';
-import { getWhatsapp, isWhatsappConnected, getQRCode, getWhatsappStatus, connectWhatsapp, logoutWhatsapp } from "./services/whatsapp";
-import QRCode from "qrcode";
-import fs from 'fs';
-import path from 'path';
+// import { createClient } from '@supabase/supabase-js';
 
-async function bootstrap() {
-  await connectWhatsapp();
-}
+import { getWhatsapp, isWhatsappConnected, getQRCode, getWhatsappStatus, connectWhatsapp, logoutWhatsapp } from "./services/whatsapp.js";
+import QRCode from "qrcode";
 
 const router = express.Router();
 
+// const supabase = createClient(process.env.SUPABASE_URL || "", process.env.SUPABASE_KEY || "");
+
+// const keys = {
+
+//     get: async (companyId: string, type: any, ids: any) => {
+
+//         const result: any = {};
+
+//         for (const id of ids) {
+
+//             const { data } = await supabase
+//                 .from("whatsapp_keys")
+//                 .select("value")
+//                 .eq("company_id", companyId)
+//                 .eq("category", type)
+//                 .eq("key", id)
+//                 .single();
+
+//             result[id] = data?.value;
+//         }
+
+//         return result;
+//     },
+
+//     set: async (companyId: string, data: Record<string, Record<string, any>>) => {
+
+//         for (const category in data) {
+
+//             for (const key in data[category]) {
+
+//                 await supabase
+//                     .from("whatsapp_keys")
+//                     .upsert({
+
+//                         company_id: companyId,
+
+//                         category,
+
+//                         key,
+
+//                         value: data[category][key]
+
+//                     });
+//             }
+//         }
+//     }
+
+// };
+
+// async function loadCreds(companyId: string) {
+
+//     const { data } = await supabase
+//         .from("whatsapp_auth")
+//         .select("creds")
+//         .eq("company_id", companyId)
+//         .single();
+
+//     if (!data) {
+
+//         return initAuthCreds();
+//     }
+
+//     return data.creds;
+// }
+
+// async function saveCreds(
+//     companyId: string,
+//     creds: any
+// ) {
+
+//     await supabase
+//         .from("whatsapp_auth")
+//         .upsert({
+//             company_id: companyId,
+//             creds
+//         });
+// }
+
+
+
 // mark
+router.get("/whatsapp/connected/:companyId", async (req, res) => {
+  const { companyId } = req.params;
+await connectWhatsapp(companyId);
+  return res.json({
+    connected: isWhatsappConnected()
+  });
+})
+
 router.post("/whatsapp/send-message", async (req, res) => {
   try {
     const { phone, text } = req.body;
@@ -18,7 +102,7 @@ router.post("/whatsapp/send-message", async (req, res) => {
     const sock = getWhatsapp();
 
     const exists = await sock.onWhatsApp(`${phone}@s.whatsapp.net`);
-    
+
     console.log(JSON.stringify(exists, null, 2));
 
     if (!exists?.length) {
@@ -47,29 +131,6 @@ router.post("/whatsapp/send-message", async (req, res) => {
 });
 
 router.get("/whatsapp/qr", async (req, res) => {
-
-  if (!isWhatsappConnected()) {
-    // Remove auth folder when already connected
-    const authPath = path.resolve(__dirname, '../auth');
-    if (fs.existsSync(authPath)) {
-      try {
-        const items = fs.readdirSync(authPath);
-        for (const item of items) {
-          const itemPath = path.join(authPath, item);
-          fs.rmSync(itemPath, { recursive: true, force: true });
-        }
-        console.log('Auth folder contents removed successfully');
-      } catch (error) {
-        console.error('Error removing auth folder contents:', error);
-      }
-    }
-    // mark
-    await bootstrap();
-  } else {
-    return res.json({
-      connected: true
-    });
-  }
 
   const qr = getQRCode();
 
@@ -108,8 +169,9 @@ router.get("/whatsapp/status", async (req, res) => {
 });
 
 router.post('/whatsapp/logout', async (req: any, res: any) => {
+  const { companyId } = req.body;
   try {
-    const result = await logoutWhatsapp();
+    const result = await logoutWhatsapp(companyId);
     if (result.success) {
       return res.status(200).json(result);
     }
