@@ -98,7 +98,6 @@ await connectWhatsapp(companyId);
 router.post("/whatsapp/send-message", async (req, res) => {
   try {
     const { phone, text } = req.body;
-
     const sock = getWhatsapp();
 
     const exists = await sock.onWhatsApp(`${phone}@s.whatsapp.net`);
