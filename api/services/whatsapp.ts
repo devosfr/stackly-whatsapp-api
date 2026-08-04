@@ -1,11 +1,6 @@
 
-import {
-  makeWASocket,
-  fetchLatestBaileysVersion,
-} from "@whiskeysockets/baileys";
-import { DisconnectReason } from "@whiskeysockets/baileys";
+import { DisconnectReason, makeWASocket, fetchLatestBaileysVersion } from "@whiskeysockets/baileys";
 import { Boom } from "@hapi/boom";
-import { useMultiFileAuthState } from "@whiskeysockets/baileys";
 import { useSupabaseAuthState } from "./supabaseAuthState";
 
 import pino from "pino";
@@ -21,7 +16,7 @@ export async function connectWhatsapp(companyId: string) {
   console.log("SOCKET ATUAL", !!sock);
   if (sock) {
     console.log("JÁ EXISTE SOCKET");
-    
+
   }
   const { version } = await fetchLatestBaileysVersion();
 
@@ -40,14 +35,6 @@ export async function connectWhatsapp(companyId: string) {
   console.log("VERSION", version);
 
 
-  // sock = makeWASocket({
-  //   version,
-  //   auth: state,
-  //   logger: pino({
-  //     level: "trace"
-  //   }),
-  //   browser: ["Stackly", "Chrome", "1.0"]
-  // });
   sock = makeWASocket({
     version,
     auth: state,
@@ -97,15 +84,6 @@ export async function connectWhatsapp(companyId: string) {
     typeof state.keys.get
   );
 
-
-
-  // sock.ws.on("CB:stream:error", (...args: any[]) => {
-  //   console.log("STREAM ERROR");
-  //   console.dir(args, { depth: null });
-  //   
-  // });
-
-
   sock.ws.on("close", (...args: any[]) => {
     console.log("WS CLOSE", args);
   });
@@ -121,35 +99,29 @@ export async function connectWhatsapp(companyId: string) {
   sock.ev.on("creds.update", async (c: any) => {
     console.log("CREDS EVENT");
     console.dir(c, { depth: 2 });
-    
-   await saveCreds(c);
+
+    await saveCreds(c);
   });
-
-  // sock.ev.on("creds.update", saveCreds);
-
-  // sock.ev.on("creds.update", (...args: any[]) => {
-  //   console.log("CREDS UPDATE EVENT", args);
-  // });
 
   sock.ev.on("messages.upsert", () => {
     console.log("MESSAGE");
-    
+
   });
 
   sock.ev.on("messaging-history.set", () => {
     console.log("HISTORY");
-    
+
   });
 
 
   isConnecting = true;
 
   sock.ev.on("connection.update", (update: any) => {
- console.log("====================");
- console.log("CONNECTION:", update.connection);
- console.log("IS NEW LOGIN:", update.isNewLogin);
- console.log("USER:", sock?.user);
- console.log("====================");
+    console.log("====================");
+    console.log("CONNECTION:", update.connection);
+    console.log("IS NEW LOGIN:", update.isNewLogin);
+    console.log("USER:", sock?.user);
+    console.log("====================");
 
     console.log("UPDATE");
     console.dir(update, { depth: null });
@@ -175,7 +147,7 @@ export async function connectWhatsapp(companyId: string) {
 
       console.log("========== CONTENT ==========");
       console.log(JSON.stringify(err.data?.content, null, 2));
-      
+
     }
 
 
@@ -198,13 +170,6 @@ export async function connectWhatsapp(companyId: string) {
       isConnecting = false;
     }
 
-    // if (connection === "close") {
-    //   console.log("CLOSE");
-    //   console.dir(lastDisconnect, { depth: null });
-
-    //   isConnected = false;
-    //   isConnecting = false;
-    // }
     if (connection === "close") {
 
       const statusCode =
