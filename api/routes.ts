@@ -1,95 +1,12 @@
 import express from 'express';
-// import { createClient } from '@supabase/supabase-js';
-
 import { getWhatsapp, isWhatsappConnected, getQRCode, getWhatsappStatus, connectWhatsapp, logoutWhatsapp } from "./services/whatsapp.js";
 import QRCode from "qrcode";
 
 const router = express.Router();
 
-// const supabase = createClient(process.env.SUPABASE_URL || "", process.env.SUPABASE_KEY || "");
-
-// const keys = {
-
-//     get: async (companyId: string, type: any, ids: any) => {
-
-//         const result: any = {};
-
-//         for (const id of ids) {
-
-//             const { data } = await supabase
-//                 .from("whatsapp_keys")
-//                 .select("value")
-//                 .eq("company_id", companyId)
-//                 .eq("category", type)
-//                 .eq("key", id)
-//                 .single();
-
-//             result[id] = data?.value;
-//         }
-
-//         return result;
-//     },
-
-//     set: async (companyId: string, data: Record<string, Record<string, any>>) => {
-
-//         for (const category in data) {
-
-//             for (const key in data[category]) {
-
-//                 await supabase
-//                     .from("whatsapp_keys")
-//                     .upsert({
-
-//                         company_id: companyId,
-
-//                         category,
-
-//                         key,
-
-//                         value: data[category][key]
-
-//                     });
-//             }
-//         }
-//     }
-
-// };
-
-// async function loadCreds(companyId: string) {
-
-//     const { data } = await supabase
-//         .from("whatsapp_auth")
-//         .select("creds")
-//         .eq("company_id", companyId)
-//         .single();
-
-//     if (!data) {
-
-//         return initAuthCreds();
-//     }
-
-//     return data.creds;
-// }
-
-// async function saveCreds(
-//     companyId: string,
-//     creds: any
-// ) {
-
-//     await supabase
-//         .from("whatsapp_auth")
-//         .upsert({
-//             company_id: companyId,
-//             creds
-//         });
-// }
-
-
-
-// mark
 router.get("/whatsapp/connected/:companyId", async (req, res) => {
   const { companyId } = req.params;
-await connectWhatsapp(companyId);
+  await connectWhatsapp(companyId);
   return res.json({
     connected: isWhatsappConnected()
   });
@@ -97,7 +14,7 @@ await connectWhatsapp(companyId);
 
 router.post("/whatsapp/send-message", async (req, res) => {
   try {
-    const { phone, text } = req.body;
+    const { phone, text, photoMessageUrl } = req.body;
     const sock = getWhatsapp();
 
     const exists = await sock.onWhatsApp(`${phone}@s.whatsapp.net`);
@@ -112,9 +29,19 @@ router.post("/whatsapp/send-message", async (req, res) => {
     }
     const jid = exists[0].jid;
 
-    await sock.sendMessage(jid, {
-      text,
-    });
+    if (photoMessageUrl) {
+      await sock.sendMessage(jid, {
+        image: {
+          url: photoMessageUrl
+        },
+        caption: text
+      });
+    } else {
+      await sock.sendMessage(jid, {
+        text,
+      });
+    }
+
 
     return res.json({
       success: true,

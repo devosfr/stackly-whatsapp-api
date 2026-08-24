@@ -2,15 +2,8 @@ require('dotenv').config();
 import express from 'express';
 import cors from "cors";
 import routesController from './routes.js';
-// import { connectWhatsapp } from './services/whatsapp.js';
 const api = express();
 
-
-// async function bootstrap() {
-//   await connectWhatsapp('23');
-// }
-
-// bootstrap();
 api.use(cors({
     origin: [
         "http://localhost:8080",
