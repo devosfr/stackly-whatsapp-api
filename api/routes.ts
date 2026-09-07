@@ -46,11 +46,37 @@ router.post("/whatsapp/send-message", async (req, res) => {
     return res.json({
       success: true,
     });
-  } catch (err) {
+  } catch (err: any) {
     console.error(err);
+
+    if (err?.status === 400) {
+      console.error("========== ERRO AO ENVIAR WHATSAPP ==========");
+
+      console.error("message:", err?.message);
+      console.error("name:", err?.name);
+      console.error("code:", err?.code);
+
+      console.error("response.status:", err?.response?.status);
+      console.error("response.data:", err?.response?.data);
+      console.error("response.headers:", err?.response?.headers);
+
+      console.error("request:", err?.request);
+
+      console.error("stack:", err?.stack);
+
+      console.error("==============================================");
+
+      return res.status(500).json({
+        success: false,
+        error: err?.message,
+        details: err?.response?.data ?? null
+      });
+    }
 
     return res.status(500).json({
       success: false,
+      message: err?.message || "Erro ao enviar mensagem",
+      code: err?.cause || "SEND_MESSAGE_ERROR",
       error: err,
     });
   }

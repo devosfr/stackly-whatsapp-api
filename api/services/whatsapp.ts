@@ -203,7 +203,7 @@ export async function connectWhatsapp(companyId: string) {
 
 export function getWhatsapp() {
   if (!sock) {
-    throw new Error("WhatsApp não inicializado.");
+    throw new Error("WhatsApp não inicializado.", { cause: "WHATSAPP_NOT_INITIALIZED" });
   }
 
   return sock;
