@@ -84,6 +84,23 @@ router.post("/whatsapp/send-message", async (req, res) => {
 
 router.get("/whatsapp/qr", async (req, res) => {
 
+   // Impede qualquer cache do QR Code
+    res.setHeader(
+      "Cache-Control",
+      "no-store, no-cache, must-revalidate, proxy-revalidate"
+    );
+    res.setHeader("Pragma", "no-cache");
+    res.setHeader("Expires", "0");
+
+    if (isWhatsappConnected()) {
+      return res.status(200).json({
+        connected: true,
+        qr: null
+      });
+    }
+
+  
+  
   const qr = getQRCode();
 
   if (!qr) {
